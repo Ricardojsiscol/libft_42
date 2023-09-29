@@ -15,21 +15,23 @@
 char	*ft_substr(char const *s, unsigned int start, size_t len)
 {
 	char	*subptr;
-	size_t	lencpy;
 	size_t	s_len;
+	size_t	i;
 
-	lencpy = len;
 	s_len = ft_strlen(s);
 	if (s_len < start)
 		return (ft_strdup(""));
-	subptr = malloc(len * sizeof(char) + 1);
-	if (subptr == 0)
-		return (ft_strdup(""));
-	while (len--)
+	if ((s_len - start) < len)
+		len = s_len - start;
+	subptr = (char *)malloc(len * sizeof(char) + 1);
+	if (!subptr)
+		return (NULL);
+	i = 0;
+	while (i < len)
 	{
-		*subptr++ = s[start];
-		start++;
+		subptr[i] = s[start + i];
+		i++;
 	}
-	*subptr = '\0';
-	return (subptr - lencpy);
+	subptr[i] = '\0';
+	return (subptr);
 }

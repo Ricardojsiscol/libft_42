@@ -16,47 +16,40 @@ static int	ft_numlen(int n)
 {
 	int	len;
 
-	len = 1;
-	if (n < 0 && n > -2147483648)
+	if (n <= 0)
+		len = 1;
+	else
+		len = 0;
+	while (n != 0)
 	{
-		n = -n;
 		len++;
-	}
-	else if (n == 0)
-		return (1);
-	else if (n == -2147483648)
-	{
-		n = 2147483647;
-		len++;
-	}
-	while (n >= 10)
-	{
 		n /= 10;
-		len++;
 	}
 	return (len);
 }
 
 char	*ft_itoa(int n)
 {
-	int		numlen;
 	char	*str;
+	int		len;
 
-	numlen = ft_numlen(n);
-	str = (char *)malloc(numlen * sizeof(char) + 1);
+	if (n == -2147483648)
+		return (ft_strdup("-2147483648"));
+	len = ft_numlen(n);
+	str = (char *)malloc(len + 1);
 	if (!str)
-		return (0);
-	str[numlen] = '\0';
+		return (NULL);
+	str[len] = '\0';
 	if (n < 0)
+	{
 		str[0] = '-';
-	if (n == 0)
+		n = -n;
+	}
+	else if (n == 0)
 		str[0] = '0';
 	while (n)
 	{
-		if (n > 0)
-			str[--numlen] = n % 10 + '0';
-		else
-			str[--numlen] = n % 10 * -1 + '0';
+		str[--len] = n % 10 + '0';
 		n /= 10;
 	}
 	return (str);

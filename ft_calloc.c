@@ -16,18 +16,20 @@ void	*ft_calloc(size_t count, size_t size)
 {
 	void	*ptr;
 	char	*char_ptr;
+	size_t	total_size;
 
-	ptr = malloc(count * size);
-	if (ptr != 0)
+	total_size = count * size;
+	ptr = malloc(total_size);
+	if (ptr)
 	{
 		char_ptr = (char *)ptr;
-		while (count--)
+		while (total_size--)
 		{
 			*char_ptr = 0;
 			char_ptr++;
 		}
 	}
 	else
-		return (0);
+		return (NULL);
 	return (ptr);
 }
